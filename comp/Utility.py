@@ -6,6 +6,8 @@ import re
 from PIL import Image
 
 
+
+
 class utility_:
     def __init__(self):
         self.block_size = 0
@@ -185,7 +187,7 @@ class utility_:
 
         return decompressed_img
 
-    def huffman_decompression(self, binary, letter_binary, shape, a):
+    def huffman_decompression(self, binary, letter_binary, shape, a, img_path):
         # print("Decoding.......")
         bitstring = str(binary[2:])
         uncompressed_string = ""
@@ -208,7 +210,8 @@ class utility_:
         res = np.reshape(res, shape)
         decompressed_img = self.decompress_image(res, self.block_size)
         data = Image.fromarray(decompressed_img)
-        data.save(r'Output/Compressed.png')
+        string = img_path.split("\\")[1]
+        data.save(f'Output/Compressed_{string}')
         if a.all() == res.all():
             print("Success")
 
@@ -216,10 +219,10 @@ class utility_:
         self.image = img_path
         my_string = self.compress_image(img_path, block_size)
         self.huffman_decompression(my_string[0], my_string[1], my_string[2],
-                                   my_string[3])
+                                   my_string[3], img_path)
         return my_string
 
-    def decompress(self, binary, letter_binary, shape, a):
+    def decompress(self, binary, letter_binary, shape, a, img_path):
         print("Decoding.......")
         bitstring = str(binary[2:])
         uncompressed_string = ""
@@ -248,13 +251,11 @@ class utility_:
         # Decompression
         img = cv2.imread(self.image, cv2.IMREAD_GRAYSCALE)
         data = Image.fromarray(img)
-        data.save("Output/Decompressed.jpg")
-        print("Output image saved to Output/Decompressed.jpg")
+        string = img_path.split("\\")[1]
+        data.save(f"Output/Decompressed{string}")
+        print("\n")
 
     def metrics(self, threshold, Q=0) -> float:
         original_size = os.path.getsize(self.image)
-        compressed_size = os.path.getsize(r"Output/Compressed.png")
-        if compressed_size == 0:
-            return comp.comp(threshold, self.image, Q)
-        else:
-            return comp.comp(threshold, self.image, Q)
+        # compressed_size = os.path.getsize(r"Output/Compressed.png")
+        return comp.comp(threshold, self.image, Q)

@@ -132,7 +132,7 @@ class Lossless_Compression_Decompression:
         # Implement Huffman decoding to obtain difference sequence D
         self.obj.decompress(self.my_string[0], self.my_string[1],
                             self.my_string[2],
-                            self.my_string[3])
+                            self.my_string[3], self.img_path)
         binary = []
         letter_binary = []
         bitstring = str(binary[2:])
@@ -152,12 +152,19 @@ class Lossless_Compression_Decompression:
 
     def metric(self):
         cr = self.obj.metrics(self.threshold, self.Q)
-        print(f"CR: {cr}")
 
 
-path = input(r"Enter image path: ")
-image_path = str(Path(path))
-img = Lossless_Compression_Decompression(3, 21, 27, image_path)
-encoded_labels = img.compress()
-reconstructed_image = img.decompress(encoded_labels)
-img.metric(),
+def main():
+    global img
+    pics_path = ["france.tif", "frog.tif", "zelda.tif"]
+    main_path = Path("Source")
+    for path in pics_path:
+        path_image = main_path / path
+        image_path = str(Path(path_image))
+        img = Lossless_Compression_Decompression(3, 21, 27, image_path)
+        encoded_labels = img.compress()
+        reconstructed_image = img.decompress(encoded_labels)
+    img.metric()
+
+if __name__ == "__main__":
+    main()
