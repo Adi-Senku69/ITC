@@ -166,5 +166,6 @@ def main():
         reconstructed_image = img.decompress(encoded_labels)
     img.metric()
 
+
 if __name__ == "__main__":
     main()
