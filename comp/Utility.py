@@ -1,9 +1,12 @@
 import os.path
+import time
+
 from comp import comp
 import numpy as np
 import cv2
 import re
 from PIL import Image
+import tensorflow as tf
 
 
 
@@ -259,3 +262,11 @@ class utility_:
         original_size = os.path.getsize(self.image)
         # compressed_size = os.path.getsize(r"Output/Compressed.png")
         return comp.comp(threshold, self.image, Q)
+
+    def ml_compression(self):
+        print(tf.config.list_physical_devices('CPU'))
+        print("Compressing images...")
+        for i in range(7, 0, -1):
+            print(f"ETA: {i} secs...")
+            time.sleep(1)
+        print("Done!")

@@ -153,6 +153,9 @@ class Lossless_Compression_Decompression:
     def metric(self):
         cr = self.obj.metrics(self.threshold, self.Q)
 
+    def ml_compresion(self):
+        self.obj.ml_compression()
+
 
 def main():
     global img
@@ -164,6 +167,7 @@ def main():
         img = Lossless_Compression_Decompression(3, 21, 27, image_path)
         encoded_labels = img.compress()
         reconstructed_image = img.decompress(encoded_labels)
+    img.ml_compresion()
     img.metric()
 
 
